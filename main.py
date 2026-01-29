@@ -13,15 +13,22 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
-# Настройки из переменных окружения
-TOKEN = os.getenv("8515075810:AAEzB-TtZSWqGyGq-qMNEXnwCZa1WTBPtsI")
-ADMIN_ID = int(os.getenv("ADMIN_ID", "6983785240"))
+# Настройки из переменных окружения (достаем из Render)
+TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID_STR = os.getenv("ADMIN_ID")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
-if not TOKEN or not ADMIN_ID:
-    raise ValueError("Задай BOT_TOKEN и ADMIN_ID в Environment Variables!")
+# Отладка - чтобы увидеть в логах, что данные пришли
+print(f"=== DEBUG ===")
+print(f"TOKEN получен: {'ДА (длина: ' + str(len(TOKEN)) + ')' if TOKEN else 'НЕТ'}")
+print(f"ADMIN_ID получен: {'ДА (' + ADMIN_ID_STR + ')' if ADMIN_ID_STR else 'НЕТ'}")
+print(f"WEBHOOK_URL: {WEBHOOK_URL}")
+print(f"==============")
 
-logging.basicConfig(level=logging.INFO)
+if not TOKEN or not ADMIN_ID_STR:
+    raise ValueError("Переменные пустые! Проверь Environment Variables в Render.")
+
+ADMIN_ID = int(ADMIN_ID_STR)
 
 # Инициализация
 bot = Bot(token=TOKEN)
@@ -236,3 +243,4 @@ async def webhook_handler(request: Request):
 async def health():
     """Проверка работы"""
     return {"status": "ONLINE", "service": "SHADOW_SEC"}
+
