@@ -202,7 +202,7 @@ async def contacts(message: Message):
     await message.answer(
         "Каналы связи:\n\n"
         "🤖 Этот бот\n"
-        "📧 secure@protonmail.com",
+        "📧 carolinethorpe63088388@outlook.com",
         reply_markup=main_kb
     )
 
@@ -243,5 +243,6 @@ async def webhook_handler(request: Request):
 async def health():
     """Проверка работы"""
     return {"status": "ONLINE", "service": "SHADOW_SEC"}
+
 
 
