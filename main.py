@@ -217,7 +217,7 @@ async def lifespan(app: FastAPI):
     if WEBHOOK_URL:
         await bot.set_webhook(
             url=f"{WEBHOOK_URL}/webhook",
-            allowed_updates=types.AllowedUpdates.all()
+            allowed_updates=["message", "callback_query", "inline_query"]
         )
         logging.info(f"Webhook установлен: {WEBHOOK_URL}/webhook")
     yield
@@ -243,4 +243,5 @@ async def webhook_handler(request: Request):
 async def health():
     """Проверка работы"""
     return {"status": "ONLINE", "service": "SHADOW_SEC"}
+
 
